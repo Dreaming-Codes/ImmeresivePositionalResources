@@ -38,61 +38,64 @@ public class ExcavatorHandlerMixin {
 
         int xStart = chunkpos.getMinBlockX();
         int zStart = chunkpos.getMinBlockZ();
-        double d0 = 0.0625;
+        double d0 = 0.0625D;
         ColumnPos pos = null;
-        double maxNoise = 0.0;
+        double maxNoise = 0;
 
-        for(int xx = 0; xx < 16; ++xx) {
-            for(int zz = 0; zz < 16; ++zz) {
-                double noise = noiseGenerator.getValue((double)(xStart + xx) * d0, (double)(zStart + zz) * d0, true) * 0.55;
-                double chance = Math.abs(noise) / 0.55;
-                if (chance > mineralNoiseThreshold && chance > maxNoise) {
-                    pos = new ColumnPos(xStart + xx, zStart + zz);
+        // Find highest noise value in chunk
+        for(int xx = 0; xx < 16; ++xx)
+            for(int zz = 0; zz < 16; ++zz)
+            {
+                double noise = noiseGenerator.getValue((xStart+xx)*d0, (zStart+zz)*d0, true)*0.55D;
+                // Vanilla Perlin noise scales to 0.55, so we un-scale it
+                double chance = Math.abs(noise)/.55;
+                if(chance > mineralNoiseThreshold&&chance > maxNoise)
+                {
+                    pos = new ColumnPos(xStart+xx, zStart+zz);
                     maxNoise = chance;
                 }
             }
-        }
 
-        if (pos != null) {
-            synchronized(MINERAL_VEIN_LIST) {
-                int radius = 12 + rand.nextInt(32);
-                int radiusSq = radius * radius;
+        if(pos!=null)
+            synchronized(MINERAL_VEIN_LIST)
+            {
                 ColumnPos finalPos = pos;
-                boolean crossover = MINERAL_VEIN_LIST.get(world.dimension()).stream().anyMatch((veinx) -> {
-                    long dX = (long)(veinx.getPos().x() - finalPos.x());
-                    long dZ = (long)(veinx.getPos().z() - finalPos.z());
-                    long dSq = dX * dX + dZ * dZ;
-                    return dSq < (long)(veinx.getRadius() * veinx.getRadius()) || dSq < (long)radiusSq;
+                int radius = 12+rand.nextInt(32);
+                int radiusSq = radius*radius;
+                boolean crossover = MINERAL_VEIN_LIST.get(world.dimension()).stream().anyMatch(vein -> {
+                    // Use longs to prevent overflow
+                    long dX = vein.getPos().x()-finalPos.x();
+                    long dZ = vein.getPos().z()-finalPos.z();
+                    long dSq = dX*dX+dZ*dZ;
+                    return dSq < vein.getRadius()*vein.getRadius()||dSq < radiusSq;
                 });
-                if (!crossover) {
+                if(!crossover)
+                {
                     MineralMix mineralMix = null;
-                    ExcavatorHandler.MineralSelection selection = new ExcavatorHandler.MineralSelection(world);
-                    if (selection.getTotalWeight() > 0) {
+                    MineralSelection selection = new MineralSelection(world);
+                    if(selection.getTotalWeight() > 0)
+                    {
                         int weight = selection.getRandomWeight(rand);
-                        Iterator var18 = selection.getMinerals().iterator();
-
-                        while(var18.hasNext()) {
-                            MineralMix e = (MineralMix)var18.next();
+                        for(MineralMix e : selection.getMinerals())
+                        {
                             weight -= e.weight;
-                            if (weight < 0) {
+                            if(weight < 0)
+                            {
                                 mineralMix = e;
                                 break;
                             }
                         }
                     }
-
-                    if (mineralMix != null) {
+                    if(mineralMix!=null)
+                    {
                         MineralVein vein = new MineralVein(pos, mineralMix.getId(), radius);
-                        if (initialVeinDepletion > 0.0) {
-                            vein.setDepletion((int)((double)mineralVeinYield * rand.nextDouble() * initialVeinDepletion));
-                        }
-
+                        // generate initial depletion
+                        if(initialVeinDepletion > 0)
+                            vein.setDepletion((int)(mineralVeinYield*(rand.nextDouble()*initialVeinDepletion)));
                         addVein(world.dimension(), vein);
-                        ((Runnable)MARK_SAVE_DATA_DIRTY.getValue()).run();
+                        MARK_SAVE_DATA_DIRTY.getValue().run();
                     }
                 }
             }
-        }
-
     }
 }
