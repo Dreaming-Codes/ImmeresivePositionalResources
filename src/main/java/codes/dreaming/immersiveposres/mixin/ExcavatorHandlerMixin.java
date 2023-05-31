@@ -4,6 +4,7 @@ import blusunrize.immersiveengineering.api.excavator.ExcavatorHandler;
 import blusunrize.immersiveengineering.api.excavator.MineralMix;
 import blusunrize.immersiveengineering.api.excavator.MineralVein;
 import blusunrize.immersiveengineering.api.utils.SetRestrictedField;
+import codes.dreaming.immersiveposres.ImmersivePositionalResources;
 import com.google.common.collect.Multimap;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ColumnPos;
@@ -35,6 +36,8 @@ public class ExcavatorHandlerMixin {
     @Inject(at = @At("HEAD"), method = "generatePotentialVein(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/util/RandomSource;)V", cancellable = true, remap = false)
     private static void generatePotentialVein(Level world, ChunkPos chunkpos, RandomSource rand, CallbackInfo ci) {
         ci.cancel();
+
+        System.out.println("Hello from generatePotentialVein!, " + ImmersivePositionalResources.CONFIG.sampleOption.get());
 
         int xStart = chunkpos.getMinBlockX();
         int zStart = chunkpos.getMinBlockZ();
