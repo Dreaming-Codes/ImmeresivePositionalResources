@@ -37,7 +37,7 @@ public class ExcavatorHandlerMixin {
     private static void generatePotentialVein(Level world, ChunkPos chunkpos, RandomSource rand, CallbackInfo ci) {
         ci.cancel();
 
-        System.out.println("Hello from generatePotentialVein!, " + ImmersivePositionalResources.CONFIG.sampleOption.get());
+        ImmersivePositionalResources.LOGGER.info("Hello from generatePotentialVein!, " + ImmersivePositionalResources.CONFIG.sampleOption.get());
 
         int xStart = chunkpos.getMinBlockX();
         int zStart = chunkpos.getMinBlockZ();
