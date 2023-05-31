@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "immersiveposres.refmap.json",
   "mixins": [
+    "ExcavatorHandlerMixin"
   ],
   "client": [
   ],
