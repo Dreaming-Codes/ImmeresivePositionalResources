@@ -64,3 +64,9 @@ Change Immersive virtual ore veins based on distance from spawn
    versionRange="[1.19.4,1.20)"
    ordering="NONE"
    side="BOTH"
+[[dependencies.immersiveposres]]
+    modId="immersiveengineering"
+    mandatory=true
+    versionRange="[1.19.4-9.4.0-166,)"
+    ordering="AFTER"
+    side="BOTH"
