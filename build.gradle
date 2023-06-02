@@ -170,6 +170,8 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("curse.maven:immersive-engineering-231951:4535969")
+
+    implementation fg.deobf("curse.maven:better-runtime-resource-pack-618156:4495306")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

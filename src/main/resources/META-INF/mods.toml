@@ -70,3 +70,9 @@ Change Immersive virtual ore veins based on distance from spawn
     versionRange="[1.19.4-9.4.0-166,)"
     ordering="AFTER"
     side="BOTH"
+[[dependencies.immersiveposres]]
+modId = "brrp_v1"
+mandatory = true
+versionRange = "[1.0.0,)"
+ordering = "NONE"
+side = "BOTH"

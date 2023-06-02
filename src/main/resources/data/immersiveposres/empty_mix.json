@@ -1,0 +1,25 @@
+{
+  "type": "immersiveengineering:mineral_mix",
+  "dimensions": [
+    "minecraft:overworld"
+  ],
+  "fail_chance": 1.0,
+  "ores": [
+    {
+      "chance": 0.0,
+      "output": {
+        "item": "minecraft:air"
+      }
+    }
+  ],
+  "sample_background": "minecraft:air",
+  "spoils": [
+    {
+      "chance": 0.0,
+      "output": {
+        "item": "minecraft:air"
+      }
+    }
+  ],
+  "weight": 0
+}
