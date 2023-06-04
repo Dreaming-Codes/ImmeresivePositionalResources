@@ -16,7 +16,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.storage.loot.Deserializers;
 import org.jetbrains.annotations.NotNull;
 import static codes.dreaming.immersiveposres.ImmersivePositionalResources.LOGGER;
-import static codes.dreaming.immersiveposres.ImmersivePositionalResources.MODID;
 
 import java.util.Map;
 
@@ -33,7 +32,8 @@ public class PositionalMineralVeinLoader extends SimpleJsonResourceReloadListene
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> resourceList, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profiler) {
         for(Map.Entry<ResourceLocation, JsonElement> entry : resourceList.entrySet()) {
-            String location = entry.getKey().toLanguageKey().substring(MODID.length() + 1);
+            String location = entry.getKey().getPath();
+            location = location.substring(location.lastIndexOf('/') + 1);
 
             try {
                 MineralVeinFeatureEntry ore = fromJson(location, GsonHelper.convertToJsonObject(entry.getValue(), "top element"));

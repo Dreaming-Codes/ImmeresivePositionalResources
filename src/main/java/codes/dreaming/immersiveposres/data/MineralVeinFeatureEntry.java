@@ -2,8 +2,6 @@ package codes.dreaming.immersiveposres.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.resources.ResourceLocation;
-import static codes.dreaming.immersiveposres.ImmersivePositionalResources.MODID;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +21,7 @@ public class MineralVeinFeatureEntry {
     public double maxDistance;
 
     public MineralVeinFeatureEntry(String id, double minDistance, double maxDistance) {
-        //remove modid from id namespace removing and the ':' after it
-        this.id = id.substring(MODID.length() + 1);
-        System.out.println("something strange id: " + this.id);
+        this.id = id.substring(id.lastIndexOf("/") + 1);
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;
     }

@@ -97,7 +97,7 @@ public class ExcavatorHandlerMixin {
     }
 
     private static boolean isAllowedBasedOnDistance(MineralMix e, Level world, ColumnPos pos) {
-        MineralVeinFeatureEntry mineralVeinFeatureEntry = MineralVeinFeatureEntry.ALL.get(e.getId().toLanguageKey().replace(".mineral", ""));
+        MineralVeinFeatureEntry mineralVeinFeatureEntry = MineralVeinFeatureEntry.ALL.get(e.getId().getPath().replace("mineral/", ""));
         if (mineralVeinFeatureEntry == null) {
             return false;
         }
