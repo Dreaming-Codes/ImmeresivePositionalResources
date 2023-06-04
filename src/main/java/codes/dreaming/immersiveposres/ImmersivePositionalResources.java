@@ -21,7 +21,8 @@ public class ImmersivePositionalResources {
     }
 
     @SubscribeEvent
-    public static void registerReloadListeners(AddReloadListenerEvent event) {
+    public void registerReloadListeners(AddReloadListenerEvent event) {
+        LOGGER.info("Registering reload listeners");
         event.addListener(new PositionalMineralVeinLoader());
     }
 }

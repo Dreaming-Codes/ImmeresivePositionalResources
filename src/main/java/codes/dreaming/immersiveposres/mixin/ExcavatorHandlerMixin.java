@@ -4,10 +4,12 @@ import blusunrize.immersiveengineering.api.excavator.ExcavatorHandler;
 import blusunrize.immersiveengineering.api.excavator.MineralMix;
 import blusunrize.immersiveengineering.api.excavator.MineralVein;
 import blusunrize.immersiveengineering.api.utils.SetRestrictedField;
+import codes.dreaming.immersiveposres.ImmersivePositionalResources;
 import codes.dreaming.immersiveposres.Utils;
 import codes.dreaming.immersiveposres.data.MineralVeinFeatureEntry;
 import com.google.common.collect.Multimap;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ColumnPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -18,6 +20,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Map;
 
 import static blusunrize.immersiveengineering.api.excavator.ExcavatorHandler.*;
 
@@ -93,7 +97,7 @@ public class ExcavatorHandlerMixin {
     }
 
     private static boolean isAllowedBasedOnDistance(MineralMix e, Level world, ColumnPos pos) {
-        MineralVeinFeatureEntry mineralVeinFeatureEntry = MineralVeinFeatureEntry.ALL.get(e.getId());
+        MineralVeinFeatureEntry mineralVeinFeatureEntry = MineralVeinFeatureEntry.ALL.get(e.getId().toLanguageKey().replace(".mineral", ""));
         if (mineralVeinFeatureEntry == null) {
             return false;
         }
